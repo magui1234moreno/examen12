@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Examen 2do Parcial</title>
+<style>
+  body { 
+    font-family: Arial, sans-serif; 
+    text-align: center; 
+    margin-top: 50px; 
+    background: linear-gradient(135deg, #a0e676, #e0ff9c);
+  }
+  .oculto { display: none; }
+  input, button { margin: 5px; padding: 8px; }
+  .cuadro {
+    background: yellow;
+    width: 500px;
+    padding: 20px;
+    border-radius: 10px;
+    margin: auto;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  }
+  button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  button:hover {
+    background: #45A049;
+  }
+</style>
+</head>
+<body>
+
+<div class="cuadro" id="contenedorQuiz">
+  <h2 id="bienvenida"></h2>
+
+  <form id="quiz">
+    <p>1. ¿Qué es PHP?</p>
+    <input type="radio" name="p1" value="a"> Lenguaje de marcado 
+    <input type="radio" name="p1" value="b"> Editor de texto<br><br>
+
+    <p>2. ¿Qué hace CSS?</p>
+    <input type="radio" name="p2" value="a"> Da estilo 
+    <input type="radio" name="p2" value="b"> Ejecuta funciones<br><br>
+
+    <p>3. ¿Qué es Visual Studio Code?</p>
+    <input type="radio" name="p3" value="a"> Lenguaje del servidor 
+    <input type="radio" name="p3" value="b"> Sistema operativo<br><br>
+
+    <p>4. Extensión de archivos PHP:</p>
+    <input type="radio" name="p4" value="a"> .php 
+    <input type="radio" name="p4" value="b"> .css<br><br>
+
+    <p>5. Etiqueta para CSS en HTML:</p>
+    <input type="radio" name="p5" value="a"> &lt;style&gt; 
+    <input type="radio" name="p5" value="b"> &lt;script&gt;<br><br>
+
+    <p>6. ¿Qué significa CSS?</p>
+    <input type="radio" name="p6" value="a"> Cascading Style Sheets 
+    <input type="radio" name="p6" value="b"> Creative Style System<br><br>
+
+    <p>7. ¿Dónde se ejecuta JavaScript?</p>
+    <input type="radio" name="p7" value="a"> En el navegador 
+    <input type="radio" name="p7" value="b"> Solo en servidores<br><br>
+
+    <button type="button" onclick="calificar()">Enviar respuestas</button>
+  </form>
+</div>
+
+<div id="resultado" class="oculto">
+  <h3>Resultado</h3>
+  <p id="detalle"></p>
+  <button onclick="reiniciar()">Volver al inicio</button>
+</div>
+
+<script>
+window.onload = function() {
+  let nombre = localStorage.getItem("nombre") || "Estudiante";
+  document.getElementById("bienvenida").innerText = "Bienvenido, " + nombre;
+};
+
+function calificar() {
+  let correctas = ["a","a","a","a","a","a","a"];
+  let total = 7;
+  let aciertos = 0;
+
+  for (let i = 1; i <= total; i++) {
+    let respuesta = document.querySelector(`input[name="p${i}"]:checked`);
+    if (respuesta && respuesta.value === correctas[i - 1]) {
+      aciertos++;
+    }
+  }
+
+  // Calificación sobre 10
+  let calificacion = (aciertos / total) * 10;
+  calificacion = calificacion.toFixed(1); 
+
+
+  document.getElementById("quiz").classList.add("oculto");
+  document.getElementById("resultado").classList.remove("oculto");
+  document.getElementById("detalle").innerText = `Tu calificación es: ${calificacion} / 10\nAciertos: ${aciertos} de ${total}`;
+}
+
+function reiniciar() {
+  location.reload();
+}
+</script>
+
+</body>
+</html>
